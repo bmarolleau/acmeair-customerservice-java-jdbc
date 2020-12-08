@@ -1,5 +1,6 @@
 
-## Acme Air Customer Service - Java/Liberty - JDBC (DB2 for i) version instead of MongoDB
+## Acme Air Customer Service - Java/Liberty 
+### JDBC (DB2 for i) version 
 
 An implementation of the Acme Air Customer Service for Java/Liberty. The primary task of the customer service is to store, update, and retrieve customer data.
 
