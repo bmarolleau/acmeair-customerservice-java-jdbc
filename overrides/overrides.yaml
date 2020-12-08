@@ -1,0 +1,24 @@
+service:
+  enabled: true
+  name: acmeair-customer-service
+  port: 9080
+  targetPort: 9080
+  type: ClusterIP
+
+ssl:
+  enabled: false
+
+ingress:
+  enabled: true
+  path: "/customer"
+  rewriteTarget: "/customer"
+  host: ""
+  secretName: ""
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/connection-proxy-header: "keep-alive"
+    ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/connection-proxy-header: "keep-alive"
+
+env:
+  jvmArgs: "-DMONGO_HOST=acmeair-customer-db -Dmp.jwt.verify.publickey.location=http://acmeair-auth-service:9080/auth/getJwk"

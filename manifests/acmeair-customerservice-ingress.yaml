@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/connection-proxy-header: "keep-alive"
+    ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/connection-proxy-header: "keep-alive"
+  name: acmeair-customer-ingress
+spec:
+  rules:
+  - host:
+    http:
+      paths:
+      - path: /customer
+        backend:
+          serviceName: acmeair-customer-service
+          servicePort: 9080

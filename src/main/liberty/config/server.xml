@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+  <!-- Enable features -->
+  <featureManager>
+   <!--  <feature>microProfile-3.3</feature> -->
+    <feature>webProfile-8.0</feature>
+    <feature>mpJwt-1.1</feature>
+  </featureManager>
+
+  <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+  <httpEndpoint id="defaultHttpEndpoint" host="*"
+              httpPort="9080" httpsPort="9443">
+  </httpEndpoint>
+
+  <quickStartSecurity userName="${env.USERNAME}" userPassword="${env.PASSWORD}" />
+
+  <webApplication name="acmeair-customerservice" location="acmeair-customerservice-java-3.3.war" contextRoot="/customer">
+    <!-- enable visibility to third party apis -->
+    <classloader apiTypeVisibility="api,ibm-api,spec,stable,third-party"/>
+  </webApplication>
+  <!-- <dataSource jndiName="jdbc/db2/acmeairdb" type="javax.sql.DataSource">
+    <jdbcDriver libraryRef="DB2iToolboxLib"/>
+    <properties.db2.i.toolbox databaseName="ACMEAIR" serverName="10.7.19.71"/>
+ </dataSource> -->
+ 
+ <library id="DB2iToolboxLib">
+  <fileset dir="/db2" includes="*.jar"/>
+</library>
+
+<connectionManager id="conMgr4" reapTime="-1" purgePolicy="FailingConnectionOnly" minPoolSize="50" maxPoolSize="50" maxIdleTime="-1" connectionTimeout="0" agedTimeout="-1"/>
+  <dataSource id="acmeairdb" jndiName="jdbc/acmeairdb" statementCacheSize="60" connectionManagerRef="conMgr4">
+    <jdbcDriver libraryRef="DB2iToolboxLib"/>
+    <properties.db2.i.toolbox databaseName="acmeair" password="{xor}Pj08bm1s" serverName="ibmi73-database" user="benoit" libraries="ACMEAIR"/>
+  </dataSource>
+<jndiEntry value="db2" jndiName="com/acmeair/repository/type"/> 
+
+
+  <cors domain="/customer"
+      allowedOrigins="*"
+      allowedMethods="GET, DELETE, POST, OPTIONS"
+      allowedHeaders="*"
+      allowCredentials="true"
+      maxAge="3600" />
+
+</server>
