@@ -21,9 +21,6 @@ import com.acmeair.db2.Db2Constants;
 import com.acmeair.service.CustomerService;
 import com.acmeair.web.dto.AddressInfo;
 import com.acmeair.web.dto.CustomerInfo;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.connection.ConnectionDescription;
 import org.bson.Document;
 
 import javax.annotation.PostConstruct;
@@ -38,32 +35,32 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Updates.set;
 
 @ApplicationScoped
 public class CustomerServiceImplDb2 extends CustomerService implements Db2Constants {
 
-  private MongoCollection<Document> customer;
+  //private MongoCollection<Document> customer;
   private Boolean isPopulated = true;
-  private final int WRITE_BATCH_SIZE = ConnectionDescription.getDefaultMaxWriteBatchSize();
+  //private final int WRITE_BATCH_SIZE = ConnectionDescription.getDefaultMaxWriteBatchSize();
 
   @Resource(lookup = "jdbc/acmeairdb")
   private DataSource ds;
 
   private Connection connection;
+  private ResultSet executeQuery;
+
   private static final Logger logger = Logger.getLogger(CustomerServiceImplDb2.class.getName());
   
 
   @Inject
   ConnectionManagerDb2 connectionManager;
-private ResultSet executeQuery;
+  
 
   @PostConstruct
   public void initialization() {
@@ -229,7 +226,53 @@ private ResultSet executeQuery;
 
   @Override
   public void updateCustomer(String username, CustomerInfo customerInfo) {
-    //Document address = parseAddressInfo(customerInfo.getAddress());
+
+    try {
+  Connection conn=getConnection();
+  //Document address = parseAddressInfo(customerInfo.getAddress());
+  String SQL_UPDATE = "UPDATE ACMEAIR.CUSTOMER set status=?,"+
+  "total_miles=?,"+
+  "miles_ytd=?,"+
+   "phonenumber=?,"+
+   "phonenumbertype=?,"+
+   "streetaddress1=?,"+
+   "streetaddress2=?,"+
+   "city=?,"+
+   "stateprovince=?,"+
+   "country=?,"+
+ "postalcode=?"+ 
+ "WHERE ID = '"+username+"'"; 
+   
+ PreparedStatement preparedStatement = conn.prepareStatement(SQL_UPDATE);
+
+  preparedStatement.setString(1, customerInfo.getStatus());
+  preparedStatement.setInt(2, customerInfo.getTotal_miles());
+  preparedStatement.setInt(3, customerInfo.getMiles_ytd());
+  
+	preparedStatement.setString(4, customerInfo.getPhoneNumber());
+
+  preparedStatement.setString(5, customerInfo.getPhoneNumberType());
+  preparedStatement.setString(6, customerInfo.getAddress().getStreetAddress1());
+  preparedStatement.setString(7, customerInfo.getAddress().getStreetAddress2());
+  preparedStatement.setString(8, customerInfo.getAddress().getCity());
+  preparedStatement.setString(9, customerInfo.getAddress().getStateProvince());
+  preparedStatement.setString(10, customerInfo.getAddress().getCountry());
+  preparedStatement.setString(11, customerInfo.getAddress().getPostalCode());
+  //preparedStatement.setString(12, username);
+
+  int row = preparedStatement.executeUpdate();
+  System.out.println("Row Updated: "+row);
+} catch (Exception e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+  /* phonenumbertype='BUSINESS', streetaddress1='124 Main St.',
+ streetaddress2='-',
+ city='Anytown',
+ stateprovince='27617',
+ country='USA',
+ postalcode='27617' 
+ WHERE ID like '%uid0@email.com%'"; 
 
    /* customer.updateOne(eq("_id", customerInfo.get_id()),
         combine(set("status", customerInfo.getStatus()), 
@@ -238,6 +281,8 @@ private ResultSet executeQuery;
             set("address", address),
             set("phoneNumber", customerInfo.getPhoneNumber()),
             set("phoneNumberType", customerInfo.getPhoneNumberType())));*/
+
+         
   }
 
   @Override
@@ -248,7 +293,7 @@ private ResultSet executeQuery;
       Connection conn=getConnection();
       
         Statement stmt = conn.createStatement();
-        String sql = "SELECT * FROM ACMEAIR.CUSTOMER WHERE ID="+username;
+        String sql = "SELECT * FROM ACMEAIR.CUSTOMER WHERE ID like '%"+username+"%'";
         stmt.execute(sql);      
         ResultSet rs = stmt.getResultSet();
         CustomerInfo customerInfo= new CustomerInfo();
@@ -291,7 +336,7 @@ private ResultSet executeQuery;
       Connection conn=getConnection();
       
         Statement stmt = conn.createStatement();
-        String sql = "SELECT * FROM ACMEAIR.CUSTOMER WHERE ID="+username;
+        String sql = "SELECT * FROM ACMEAIR.CUSTOMER WHERE ID like '%"+username+"%'";
         stmt.execute(sql);      
         ResultSet rs = stmt.getResultSet();
         CustomerInfo customerInfo= new CustomerInfo();
@@ -331,13 +376,13 @@ private ResultSet executeQuery;
 
   @Override
   public void dropCustomers() {
-    customer.deleteMany(new Document());
+    //customer.deleteMany(new Document());
 
   }
 
   @Override
   public String getServiceType() {
-    return "mongo";
+    return "db2 for i";
   }
 
   @Override
@@ -346,17 +391,19 @@ private ResultSet executeQuery;
       return true;
     }
         
-    if (customer.countDocuments() > 0) {
+    /*if (customer.countDocuments() > 0) {
       isPopulated = true;
       return true;
     } else {
       return false;
-    }
+    }*/
+    return true;
   }
 
   @Override
   public boolean isConnected() {
-    return (customer.countDocuments() >= 0);
+    //return (customer.countDocuments() >= 0);
+    return true;
   }
 
   private Document parseCustomerInfo(CustomerInfo customerInfo) {
