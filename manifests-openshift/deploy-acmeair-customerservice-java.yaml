@@ -27,75 +27,76 @@ spec:
           value: acmeair
         - name: PASSWORD
           value: password
-        - name: MONGO_HOST
-          value: acmeair-customer-db
+        - name: DATABASE_HOST
+          value: ibmi-database 
+        - name: LIBRARY_LIST
+          value: acmeair 
         - name: SECURE_SERVICE_CALLS
           value: 'true'
         - name: ACMEAIR_STACKAA_AUTH_URL
           value: "http://acmeair-auth-service:9080/auth"
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: acmeair-customer-service
-spec:
-  ports:
-    - port: 9080
-  selector:
-    name: acmeair-customer-deployment
----
 ##### Customer Database #####
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
-  labels:
-    service: acmeair-customer-db
-  name: acmeair-customer-db
+  name: ibmi-database 
 spec:
-  ports:
-  - name: "27017"
-    port: 27017
-    protocol: TCP
-    targetPort: 27017
-  selector:
-    name: acmeair-customer-db
-status:
-  loadBalancer: {}
+  type: ExternalName
+  externalName: bendemo.10.7.19.71.nip.io
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  creationTimestamp: null
-  name: acmeair-customer-db
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      name: acmeair-customer-db
-  strategy: {}
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        name: acmeair-customer-db
-    spec:
-      volumes:
-        - name: acmeair-customer-db-1
-          emptyDir: {}
-        - name: acmeair-customer-db-2
-          emptyDir: {}
-      containers:
-      - image: mongo
-        name: acmeair-customer-db
-        ports:
-        - containerPort: 27017
-          protocol: TCP
-        resources: {}
-        volumeMounts:
-          - name: acmeair-customer-db-1
-            mountPath: /data/configdb
-          - name: acmeair-customer-db-2
-            mountPath: /data/db
-      restartPolicy: Always
-status: {}
+##### Customer Database #####
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   creationTimestamp: null
+#   labels:
+#     service: acmeair-customer-db
+#   name: acmeair-customer-db
+# spec:
+#   ports:
+#   - name: "27017"
+#     port: 27017
+#     protocol: TCP
+#     targetPort: 27017
+#   selector:
+#     name: acmeair-customer-db
+# status:
+#   loadBalancer: {}
+#---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   creationTimestamp: null
+#   name: acmeair-customer-db
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       name: acmeair-customer-db
+#   strategy: {}
+#   template:
+#     metadata:
+#       creationTimestamp: null
+#       labels:
+#         name: acmeair-customer-db
+#     spec:
+#       volumes:
+#         - name: acmeair-customer-db-1
+#           emptyDir: {}
+#         - name: acmeair-customer-db-2
+#           emptyDir: {}
+#       containers:
+#       - image: mongo
+#         name: acmeair-customer-db
+#         ports:
+#         - containerPort: 27017
+#           protocol: TCP
+#         resources: {}
+#         volumeMounts:
+#           - name: acmeair-customer-db-1
+#             mountPath: /data/configdb
+#           - name: acmeair-customer-db-2
+#             mountPath: /data/db
+#       restartPolicy: Always
+# status: {}
