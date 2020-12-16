@@ -35,6 +35,17 @@ spec:
           value: 'true'
         - name: ACMEAIR_STACKAA_AUTH_URL
           value: "http://acmeair-auth-service:9080/auth"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: acmeair-customer-service
+spec:
+  ports:
+    - port: 9080
+  selector:
+    name: acmeair-customer-deployment          
 ---
 ##### Customer Database #####
 apiVersion: v1

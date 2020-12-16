@@ -17,7 +17,6 @@ Db2 for i is a rock solid database server with HA and DR capabilities. This exam
 Note: Default user profile is acmeair , password is password, library (sql collection) is acmeair
 Feel free to update the Deployment environment variable values according to your environement (user, password, lib list)
 
-$ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io
-$ export DB2FORI_LIBRARIES=ACMEAIR
-$ cd scripts
-$ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps-crc.testing/acmeair image-registry.openshift-image-registry.svc:5000/acmeair acmeair-acmeair.apps-crc.testing docker open-liberty:full 
+- $ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io
+- $ cd scripts
+- $ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps-crc.testing/acmeair image-registry.openshift-image-registry.svc:5000/acmeair acmeair-acmeair.apps-crc.testing docker open-liberty:full 
