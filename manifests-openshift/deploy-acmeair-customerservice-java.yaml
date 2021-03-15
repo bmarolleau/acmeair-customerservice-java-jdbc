@@ -40,7 +40,7 @@ spec:
         - name: PASSWORD
           valueFrom:
             secretKeyRef:
-             name: bdb2fori-credentials
+             name: db2fori-credentials
              key: password  
           #value: password
         - name: DATABASE_HOST
