@@ -16,7 +16,13 @@ Db2 for i is a rock solid database server with HA and DR capabilities. This exam
 - Build and deploy this micro-service (replacing the initial [Customer Service](https://github.com/blueperf/acmeair-customerservice-java) by this Db2 for i alternative from in a single command using the following commands. 
 Note: Default user profile is acmeair , password is password, library (sql collection) is acmeair
 Feel free to update the Deployment environment variable values according to your environement (user, password, lib list)
-
+### Example 1:
 - $ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io
 - $ cd scripts
 - $ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps-crc.testing/acmeair image-registry.openshift-image-registry.svc:5000/acmeair acmeair-acmeair.apps-crc.testing docker open-liberty:full 
+
+### Example 2: Alt database (jdbc, Db2 Mirror for i)
+- $ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io
+- $ export DB2FORI_HOSTNAME_ALT=db2acmeair2.10.3.60.81.nip.io
+- $ cd scripts
+- $ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps.sandbox.power.mpl/bmarolleau  default-route-openshift-image-registry.apps.sandbox.power.mpl/bmarolleau acmeair-bmarolleau.apps.sandbox.power.mpl podman  
