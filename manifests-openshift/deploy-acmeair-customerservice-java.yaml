@@ -1,3 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db2fori-credentials
+data:
+  username: YWNtZWFpcg==
+  password: cGFzc3dvcmQ=
+---  
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,9 +32,17 @@ spec:
         imagePullPolicy: Always
         env:
         - name: USERNAME
-          value: acmeair
+          #value: acmeair
+          valueFrom:
+            secretKeyRef:
+             name: db2fori-credentials
+             key: username  
         - name: PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+             name: bdb2fori-credentials
+             key: password  
+          #value: password
         - name: DATABASE_HOST
           value: ibmi-database 
         - name: DATABASE_ALT_HOST
