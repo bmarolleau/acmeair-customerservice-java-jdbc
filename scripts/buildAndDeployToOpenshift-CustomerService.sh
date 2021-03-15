@@ -100,6 +100,17 @@ fi
    sed -i.bak "s@bendemo.10.7.19.71.nip.io@${DB2FORI_HOSTNAME}@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
  fi
 
+ if [[ -z "${DB2FORI_HOSTNAME_ALT}" ]]; then
+   echo "DB2 For i Alternate Hostname not defined (export DB2FORI_HOSTNAME_ALT=<value>). Please Fix this or patch the ibmi-database-alt service."
+   echo "Simple setup: use same value as DB2FORI_HOSTNAME} "
+   echo "Patching Service with ALT IBM i domain name (cname not IP): ${DB2FORI_HOSTNAME}"
+   sed -i.bak "s@bendemo2.10.7.19.72.nip.io@${DB2FORI_HOSTNAME}@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
+ else
+   echo "Alt jdbc / Db2 Mirror setup"
+   echo "Patching Service with ALT IBM i domain name (cname not IP): ${DB2FORI_HOSTNAME_ALT}"
+   sed -i.bak "s@bendemo2.10.7.19.72.nip.io@${DB2FORI_HOSTNAME_ALT}@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
+ fi
+
 # if [[ -z "${DB2FORI_USER}" ]]; then
 #   echo "DB2 For i User not defined (export DB2FORI_USER=<value>). Please Fix this or patch the deployment env"
 # else
@@ -131,6 +142,8 @@ sed -i.bak "s@${ROUTE_HOST}@_HOST_@" ${MANIFESTS}/acmeair-customerservice-route.
 
 echo "Removing Service target - IBM i external name"
 sed -i.bak "s@${DB2FORI_HOSTNAME}@bendemo.10.7.19.71.nip.io@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
+sed -i.bak "s@${DB2FORI_HOSTNAME_ALT}@bendemo2.10.7.19.72.nip.io@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
+
 # echo "Removing User Name"
 # sed -i.bak "s@${DB2FORI_USER}@__user__@" ${MANIFESTS}/deploy-acmeair-customerservice-java.yaml
 # echo "Removing User Name"

@@ -29,6 +29,8 @@ spec:
           value: password
         - name: DATABASE_HOST
           value: ibmi-database 
+        - name: DATABASE_ALT_HOST
+          value: ibmi-database-alt
         - name: LIBRARY_LIST
           value: acmeair 
         - name: SECURE_SERVICE_CALLS
@@ -55,6 +57,16 @@ metadata:
 spec:
   type: ExternalName
   externalName: bendemo.10.7.19.71.nip.io
+---
+
+##### Customer Database Alternative - Db2 Mirror for i #####
+apiVersion: v1
+kind: Service
+metadata:
+  name: ibmi-database-alt
+spec:
+  type: ExternalName
+  externalName: bendemo2.10.7.19.72.nip.io
 ---
 ##### Customer Database #####
 # apiVersion: v1

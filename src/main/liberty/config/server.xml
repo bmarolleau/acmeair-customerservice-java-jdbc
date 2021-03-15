@@ -26,11 +26,19 @@
  <library id="DB2iToolboxLib">
   <fileset dir="/db2" includes="*.jar"/>
 </library>
-
 <connectionManager id="conMgr4" reapTime="-1" purgePolicy="FailingConnectionOnly" minPoolSize="50" maxPoolSize="50" maxIdleTime="-1" connectionTimeout="0" agedTimeout="-1"/>
   <dataSource id="acmeairdb" jndiName="jdbc/acmeairdb" statementCacheSize="60" connectionManagerRef="conMgr4">
     <jdbcDriver libraryRef="DB2iToolboxLib"/>
-    <properties.db2.i.toolbox databaseName="acmeair" password="${env.PASSWORD}" serverName="${env.DATABASE_HOST}" user="${env.USERNAME}" libraries="${env.LIBRARY_LIST}"/>
+    <properties.db2.i.toolbox 
+    databaseName="acmeair" 
+    password="${env.PASSWORD}" 
+    serverName="${env.DATABASE_HOST}" 
+    user="${env.USERNAME}" 
+    libraries="${env.LIBRARY_LIST}"
+    clientRerouteAlternateServerName="${env.DATABASE_ALT_HOST}"
+    enableClientAffinitiesList="1"
+    enableSeamlessFailover="1"
+    />
   </dataSource>
 <jndiEntry value="db2" jndiName="com/acmeair/repository/type"/> 
 
