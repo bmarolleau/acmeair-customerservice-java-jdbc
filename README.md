@@ -6,6 +6,8 @@ An implementation of the Acme Air Customer Service for Java/Liberty. The primary
 
 Db2 for i is a rock solid database server with HA and DR capabilities. This example shows you how to intgrate the Kubernetes and Stateless world with the statefull and transactional world on IBM i. 
 
+Link to a full presentation : [OpenShift & IBM i : Containerize your IBM i ](https://ibm.box.com/s/dnv8rhh2ikim70t69kcjf9qblehblc0u)
+
 ## Build Instruction for OpenShift 
 
 - First git clone this repository, in addition to the other microservices from the [BluePerf project](https://github.com/blueperf/acmeair-mainservice-java). Test branch : branch microprofile-3.3 
