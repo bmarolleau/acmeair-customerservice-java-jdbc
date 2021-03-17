@@ -9,8 +9,6 @@ ZERO interruption, ZERO downtime. 24x7 access to your database.
 
 Link to a full presentation : [OpenShift & IBM i : Containerize your IBM i ](https://ibm.box.com/s/dnv8rhh2ikim70t69kcjf9qblehblc0u)
 
-Link to a full presentation : [OpenShift & IBM i : Containerize your IBM i ](https://ibm.box.com/s/dnv8rhh2ikim70t69kcjf9qblehblc0u)
-
 ## Build Instruction for OpenShift 
 
 - First git clone this repository, in addition to the other microservices from the [BluePerf project](https://github.com/blueperf/acmeair-mainservice-java). Test branch : branch microprofile-3.3 
