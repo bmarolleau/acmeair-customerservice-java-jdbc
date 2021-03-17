@@ -28,7 +28,7 @@ Note: Feel free to change that, but the default user profile used here is 'acmea
 
 ### Example 2: Alternate database server (jdbc, Db2 Mirror for i)
 Refer to this [jdbc/jtopen documentation](http://jt400.sourceforge.net/doc/com/ibm/as400/access/doc-files/JDBCProperties.html#alternate)
-![OCP IBM i Db2 Mirror for i](./OCP-IBMi-db2M.png)
+![OCP IBM i Db2 Mirror for i](./OCP-IBMi-db2M.png) 
 - `$ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io`
 - `$ export DB2FORI_HOSTNAME_ALT=db2acmeair2.10.3.60.81.nip.io`
 - `$ cd scripts`
