@@ -4,7 +4,10 @@
 
 An implementation of the Acme Air Customer Service for Java/Liberty. The primary task of the customer service is to store, update, and retrieve customer data on Db2 for i. It can be adapted for any jdbc based database server.  Fork from the Mongodb based [Customer Service](https://github.com/blueperf/acmeair-customerservice-java).  
 
-Db2 for i is a rock solid database server with HA and DR capabilities. This example shows you how to intgrate the Kubernetes and Stateless world with the statefull and transactional world on IBM i. 
+IBM i (Db2 for i) is a rock solid database server with HA and DR capabilities. This example shows you how to intgrate the Kubernetes and Stateless world with the statefull and transactional world on IBM i. 
+ZERO interruption, ZERO downtime. 24x7 access to your database. 
+
+Link to a full presentation : [OpenShift & IBM i : Containerize your IBM i ](https://ibm.box.com/s/dnv8rhh2ikim70t69kcjf9qblehblc0u)
 
 ## Build Instruction for OpenShift 
 
