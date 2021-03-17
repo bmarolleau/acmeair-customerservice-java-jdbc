@@ -14,7 +14,7 @@ Link to a full presentation : [OpenShift & IBM i : Containerize your IBM i ](htt
 ## Build Instruction for OpenShift 
 
 - First,  git clone this repository, in addition to the other microservices from the [BluePerf project](https://github.com/blueperf/acmeair-mainservice-java). 
-use the test branch : branch microprofile-3.3 . Ex: git clone https://github.com/blueperf/acmeair-mainservice-java.git --branch microprofile-3.3  (do that for each microservice in the BluePerf project)
+use the test branch : branch microprofile-3.3 , use the git option `--branch microprofile-3.3` (do that for each microservice in the BluePerf project)
 - Download and Copy an up to date jdbc driver in the 'drivers' folder. ex: jt400.jar
 - Use the scripts in the 'drivers' folder to create the acmeair database and import the initial data.
 - Install maven, oc cli , docker or podman client first. Refer to the original BluePerf project instructions. 
@@ -22,13 +22,13 @@ use the test branch : branch microprofile-3.3 . Ex: git clone https://github.com
 - Build and deploy this micro-service (replacing the initial [Customer Service](https://github.com/blueperf/acmeair-customerservice-java) by this Db2 for i alternative from in a single command using the following commands. 
 Note: Feel free to change that, but the default user profile used here is 'acmeair' , password is 'password', library (sql collection) is acmeair. Update the Deployment environment variable values according to your environement (user, password, lib list)
 ### Example 1 - Single Db2 for i server:
-- $ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io
-- $ cd scripts
-- $ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps-crc.testing/acmeair image-registry.openshift-image-registry.svc:5000/acmeair acmeair-acmeair.apps-crc.testing docker open-liberty:full 
+- `$ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io`
+- `$ cd scripts`
+- `$ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps-crc.testing/acmeair image-registry.openshift-image-registry.svc:5000/acmeair acmeair-acmeair.apps-crc.testing docker open-liberty:full `
 
 ### Example 2: Alternate database server (jdbc, Db2 Mirror for i)
 Refer to this [jdbc/jtopen documentation](http://jt400.sourceforge.net/doc/com/ibm/as400/access/doc-files/JDBCProperties.html#alternate).
-- $ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io
-- $ export DB2FORI_HOSTNAME_ALT=db2acmeair2.10.3.60.81.nip.io
-- $ cd scripts
-- $ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps.sandbox.power.mpl/bmarolleau  default-route-openshift-image-registry.apps.sandbox.power.mpl/bmarolleau acmeair-bmarolleau.apps.sandbox.power.mpl podman  
+- `$ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io`
+- `$ export DB2FORI_HOSTNAME_ALT=db2acmeair2.10.3.60.81.nip.io`
+- `$ cd scripts`
+- `$ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps.sandbox.power.mpl/bmarolleau  default-route-openshift-image-registry.apps.sandbox.power.mpl/bmarolleau acmeair-bmarolleau.apps.sandbox.power.mpl podman `
