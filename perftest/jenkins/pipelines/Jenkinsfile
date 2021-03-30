@@ -49,7 +49,7 @@ pipeline {
                   if (openshift.selector("configMaps", [ "testplan" : testPlanName ]).exists()) {
                       openshift.selector("configMaps", [ "testplan" : testPlanName ]).delete()
                   }
-                  /* openshift.selector("all", [ job-name : apt-jmeter ]).delete() */
+                  /* openshift.selector("all", [ job-name : acmeair-jmeter ]).delete() */
                 }
             }
         }
@@ -127,7 +127,7 @@ pipeline {
                     // Test plan is configurable
                     // Environment variables can be passed to run the same test plan with different conditions:
                     // duration, number of messages sent, distribution parameters
-                    def models = openshift.process("apt-jmeter-job", "-p", "JMX_CONFIGMAP=${testPlanName}","-p","RESULT_SUB_DIR=${JOB_NAME}/${BUILD_NUMBER}","-p","CALLBACK_URL=${callbackUrl}")
+                    def models = openshift.process("acmeair-jmeter-job", "-p", "JMX_CONFIGMAP=${testPlanName}","-p","RESULT_SUB_DIR=${JOB_NAME}/${BUILD_NUMBER}","-p","CALLBACK_URL=${callbackUrl}")
                     // It is possible to modify the objects, mounting a JKS with credentials for a specic broker for instance
                     // Just adding a label here
                     for ( o in models ) {
