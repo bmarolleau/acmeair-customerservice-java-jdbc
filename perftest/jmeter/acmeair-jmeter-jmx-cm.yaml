@@ -710,7 +710,7 @@ metadata:
     manager: kubectl-label
     operation: Update
     time: "2021-03-30T08:16:29Z"
-  name: acmeair-jmeter-jmx
+  name: acmeair-jmx
   namespace: bmarolleau
   resourceVersion: "54300161"
   selfLink: /api/v1/namespaces/bmarolleau/configmaps/acmeair-jmx
