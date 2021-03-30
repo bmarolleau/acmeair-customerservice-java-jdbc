@@ -10,7 +10,7 @@ objects:
     metadata:
       labels:
         app: acmeair-jmeter
-      name: acmeair-jenkins-jmeter
+      name: acmeair-jmeter
     spec:
       parallelism: 1
       completions: 1
