@@ -1,6 +1,6 @@
 // These could also be passed as parameters
-def testPlanPath = 'https://raw.githubusercontent.com/bmarolleau/auto-perf-test/master/jmeter/openshift/apt-jmx-cm.yaml' 
-def testPlanName = 'apt-jmx' 
+def testPlanPath = 'https://raw.githubusercontent.com/bmarolleau/acmeair-customerservice-java-jdbc/master/perftest/jmeter/openshift/acmeair-jmeter-jmx-cm.yaml' 
+def testPlanName = 'acmeair-jmx' 
 pipeline {
   agent {
     node {
