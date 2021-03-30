@@ -84,7 +84,7 @@ parameters:
     value: bmarolleau 
   - description: Name of the ConfigMap containing the test(s) to run
     name: JMX_CONFIGMAP
-    value: acmeair-jmx
+    value: acmeair-jenkins-jmx
   - description: Url for notification of test completion
     name: CALLBACK_URL
   - description: Name of the subdirectory where test results are to be stored 
