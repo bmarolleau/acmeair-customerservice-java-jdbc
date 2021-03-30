@@ -16,7 +16,7 @@ objects:
       completions: 1
       template:
         metadata:
-          name: acmeair-jenkins-jmeter
+          name: acmeair-jmeter
           labels:
             testplan: AcmeAir-microservices-mpJwt-v2
         spec:
