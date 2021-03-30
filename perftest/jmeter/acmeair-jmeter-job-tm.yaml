@@ -1,0 +1,115 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  labels:
+    app: acmeair-jmeter
+  name: acmeair-jmeter-job
+objects:
+  - apiVersion: batch/v1
+    kind: Job
+    metadata:
+      labels:
+        app: acmeair-jmeter
+      name: acmeair-jmeter
+    spec:
+      parallelism: 1
+      completions: 1
+      template:
+        metadata:
+          name: acmeair-jmeter
+          labels:
+            testplan: AcmeAir-microservices-mpJwt-v2
+        spec:
+          containers:
+          - name: jmeter
+            image:     image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/acmeair-jmeter:latest
+            resources:
+              requests:
+                cpu: '500m'
+                memory: 1Gi
+            env:
+              - name: D_usePureIDs
+                value: 'true'
+              - name: J_HOST
+                value: ${JMETER_JHOST}
+              - name: J_PORT
+                value: ${JMETER_JPORT}
+              - name: J_THREAD 
+                value:  ${JTHREAD} 
+              - name: J_USER
+                value:  ${JUSER}
+              - name: J_DURATION 
+                value: ${JMETER_TESTDURATION}
+              - name: J_RAMP
+                value:  ${JRAMP}
+              - name: J_DELAY
+                value:  ${JDELAY} 
+              - name: J_sample_variables
+                value: "FLIGHTTOCOUNT,FLIGHTRETCOUNT,ONEWAY"
+              - name: J_INFLUXDB_SERVER
+                value: 'influxdb-1x'
+              - name: J_INFLUXDB_PORT
+                value: '8086'
+              - name: JAEGER_SERVICE_NAME
+                value: jmeter
+              - name: JAEGER_SAMPLER_PARAM
+                value: '1'
+              - name: JAEGER_PROPAGATION
+                value: 'jaeger,b3'
+              - name: CALLBACK_URL
+                value: ${CALLBACK_URL}
+              - name: RESULT_SUB_DIR
+                value: ${RESULT_SUB_DIR}
+            volumeMounts:
+              - mountPath: /opt/jmeter/tests
+                name: tests
+              - mountPath: /opt/jmeter/results
+                name: results
+          restartPolicy: OnFailure
+          volumes:
+            - name: results
+              persistentVolumeClaim:
+                claimName: ${RESULT_PVC}
+            - configMap:
+                defaultMode: 420
+                name: ${JMX_CONFIGMAP}
+              name: tests
+            - name: jks
+              secret:
+                defaultMode: 420
+                secretName: ${JKS_SECRET}
+parameters:
+  - description: Namespace/project the job is created in
+    name: NAMESPACE
+    value: bmarolleau 
+  - description: Name of the ConfigMap containing the test(s) to run
+    name: JMX_CONFIGMAP
+    value: acmeair-jmx
+  - description: Url for notification of test completion
+    name: CALLBACK_URL
+  - description: Name of the subdirectory where test results are to be stored 
+    name: RESULT_SUB_DIR
+  - description: Duration of the test run (seconds) 
+    name: JMETER_TESTDURATION  
+    value: '600' 
+  - description: JHOST  
+    name: JMETER_JHOST
+    value: 'acmeair-bmarolleau.apps.sandbox.power.mpl'    
+  - description: JPORT
+    name: JMETER_JPORT
+    value: '80'
+  - description: Name of the persistent volume claim to use for storing the test(s) results
+    name: RESULT_PVC
+    value: acmeair-jmeter
+  - description: 
+    name: JRAMP 
+    value: '60'
+  - description: 
+    name: JTHREAD 
+    value: '100'
+  - description: 
+    name: JDELAY
+    value: '0'
+  - description:
+    name: JUSER
+    value: '999'       

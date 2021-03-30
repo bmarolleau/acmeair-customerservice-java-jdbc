@@ -1,0 +1,167 @@
+// These could also be passed as parameters
+def testPlanPath = 'https://raw.githubusercontent.com/fgiloux/auto-perf-test/master/jmeter/openshift/apt-jmx-cm.yaml' 
+def testPlanName = 'apt-jmx' 
+pipeline {
+  agent {
+    node {
+      label 'master'
+    }
+  }
+  environment {
+    JENKINS_URL = "http://jenkins"
+  } 
+  // triggers {
+    // Execute the pipeline once a day with automated distribution.
+    // cron('H H * * *')
+  //}
+  options {
+    timeout(time: 20, unit: 'MINUTES') 
+  }
+  stages {
+    stage('preamble') {
+        steps {
+            script {
+                openshift.withCluster() {
+                    openshift.withProject() {
+                        echo "Using project: ${openshift.project()}"
+                    }
+                }
+            }
+        }
+    }
+    // The aim of this section is to make sure that the environment
+    // has no left over. Delete and recreate provides confidence
+    // and reproducibility.
+    stage('cleanup') {
+      steps {
+        script {
+            openshift.withCluster() {
+                openshift.withProject() {
+                  // Deactivated for making demos quicker
+                  /* openshift.selector("all", [ 'app' : 'camel-amq-fakeapp' ]).delete() */
+                  // Secrets need to be addressed separately
+                  /* if (openshift.selector("secrets", secretName).exists()) { 
+                    openshift.selector("secrets", secretName).delete()
+                  } */
+                  if (openshift.selector("all", [ "testplan" : testPlanName ]).exists()) {
+                      openshift.selector("all", [ "testplan" : testPlanName ]).delete()
+                  }
+                  if (openshift.selector("configMaps", [ "testplan" : testPlanName ]).exists()) {
+                      openshift.selector("configMaps", [ "testplan" : testPlanName ]).delete()
+                  }
+                  /* openshift.selector("all", [ job-name : apt-jmeter ]).delete() */
+                }
+            }
+        }
+      }
+    }
+    // Template may be used to populate the environment
+    // Not used here
+    /* stage('create') {
+      steps {
+        script {
+            openshift.withCluster() {
+                openshift.withProject() {
+                  openshift.newApp(templatePath) 
+                }
+            }
+        }
+      }
+    } */
+    // This stage is for building the application from git repository
+    stage('build') {
+      steps {
+        script {
+            openshift.withCluster() {
+                openshift.withProject() {
+                    // Deactivated for making demos quicker
+                    /* def builds = openshift.selector("bc", 'camel-amq-fakeapp-s2i').startBuild("--wait=true") */
+                }
+            }
+        }
+      }
+    }
+    // This stage is provisioning the environment with specifics
+    // This may include credentials and configMaps with endpoint information
+    // A new deployment is started if no image change trigger is configured
+    // in the deployment configuration, only wait for deployment completion otherwise
+    // Test plans and datsets to be run are also create here.
+    stage('deploy') {
+      steps {
+        script {
+            openshift.withCluster() {
+                openshift.withProject() {
+                    // Credentials prepopulated in environment for security reason
+                    // TODO: Create separate configMaps for
+                    //         - test plan
+                    //         - message template
+                    //         - dataset
+                    // In real life an scm plugin would be used.
+                    // def testPlanCmSource = sh(returnStdout: true, script: "curl ${testPlanPath}")
+                    def testPlanCm = openshift.create(testPlanPath).object()
+                    testPlanCm.metadata.labels['testplan'] = testPlanName
+                    openshift.apply(testPlanCm)
+                    // Deactivated for making demos quicker
+                    //         - TODO: Creation of configMap with application properties
+                    /* def dc = openshift.selector("dc", 'camel-amq-fakeapp').rollout()
+                    timeout(5) { 
+                        openshift.selector("dc", 'camel-amq-fakeapp').related('pods').untilEach(1) {
+                            return (it.object().status.phase == "Running")
+                        }
+                    } */
+                }
+            }
+        }
+      }
+    }
+    // This stage is for test execution
+    stage('test') {
+      steps {
+        script {
+            openshift.withCluster() {
+                openshift.withProject() {
+                    echo "Starting tests"
+                    // Register a web hook to get notified of test completion
+                    def hook = registerWebhook()
+                    def callbackUrl = hook.getURL()
+                    // Test plan is configurable
+                    // Environment variables can be passed to run the same test plan with different conditions:
+                    // duration, number of messages sent, distribution parameters
+                    def models = openshift.process("apt-jmeter-job", "-p", "JMX_CONFIGMAP=${testPlanName}","-p","RESULT_SUB_DIR=${JOB_NAME}/${BUILD_NUMBER}","-p","CALLBACK_URL=${callbackUrl}")
+                    // It is possible to modify the objects, mounting a JKS with credentials for a specic broker for instance
+                    // Just adding a label here
+                    for ( o in models ) {
+                          o.metadata.labels['testplan'] = testPlanName
+                    }
+                    def created = openshift.create(models)
+                    // Block and wait for test completion up to 10mns
+                    timeout(10) {
+                        print "Waiting for tests to complete..."
+                        waitForWebhook hook
+                    }
+                    // The test results are available on a shared drive mounted by Jenkins
+                    perfReport "/opt/performances/${JOB_NAME}/${BUILD_NUMBER}/*.jtl"
+                    // perfReport sourceDataFiles: "/opt/performances/${JOB_NAME}/${BUILD_NUMBER}/*.jtl", compareBuildPrevious: true, modePerformancePerTestCase: true, modeOfThreshold: true, relativeFailedThresholdPositive: 50, relativeUnstableThresholdNegative: 40, relativeUnstableThresholdPositive: 40
+                    // Job delete required due to the jaeger-agent sidecar not terminating
+                    openshift.selector('job', ['testplan': testPlanName]).delete()
+                    echo "Tests completed"
+                }
+            }
+        }
+      }
+    }
+    // After tests have been successfully executed the image may be tagged accordingly
+    stage('tag') {
+      steps {
+        script {
+            openshift.withCluster() {
+                openshift.withProject() {
+                  openshift.tag("camel-amq-fakeapp:latest", "camel-amq-fakeapp:staging") 
+                }
+            }
+        }
+      }
+    }
+  }
+}
+
