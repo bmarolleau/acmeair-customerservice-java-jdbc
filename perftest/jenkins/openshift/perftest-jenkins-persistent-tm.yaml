@@ -119,7 +119,7 @@ objects:
             claimName: ${JENKINS_SERVICE_NAME}
         - name: perftest
           persistentVolumeClaim:
-            claimName: apt-jmeter
+            claimName: acmeair-jmeter
     triggers:
     - imageChangeParams:
         automatic: true
@@ -199,7 +199,7 @@ parameters:
 - description: Maximum amount of memory the container can use.
   displayName: Memory Limit
   name: MEMORY_LIMIT
-  value: 512Mi
+  value: 1024Mi
 - description: Volume space available for data, e.g. 512Mi, 2Gi.
   displayName: Volume Capacity
   name: VOLUME_CAPACITY
