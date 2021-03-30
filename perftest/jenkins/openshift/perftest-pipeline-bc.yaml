@@ -5,8 +5,8 @@ metadata:
 spec:
   source:
     git:
-      uri: "https://github.com/bmarolleau/auto-perf-test.git"
-    contextDir: jenkins
+      uri: https://github.com/bmarolleau/acmeair-customerservice-java-jdbc.git
+    contextDir: "perftest/jenkins"
   strategy:
     jenkinsPipelineStrategy:
       jenkinsfilePath: pipelines/Jenkinsfile

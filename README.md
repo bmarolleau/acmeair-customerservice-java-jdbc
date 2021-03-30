@@ -26,7 +26,7 @@ Note: Feel free to change that, but the default user profile used here is 'acmea
 - `$ cd scripts`
 - `$ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps-crc.testing/acmeair image-registry.openshift-image-registry.svc:5000/acmeair acmeair-acmeair.apps-crc.testing docker open-liberty:full `
 
-### Example 2: Alternate database server (jdbc, Db2 Mirror for i)
+### Example 2: K8s + Db2 Mirror and Alternate database server (jdbc, Db2 Mirror for i)
 Refer to this [jdbc/jtopen documentation](http://jt400.sourceforge.net/doc/com/ibm/as400/access/doc-files/JDBCProperties.html#alternate). This scenario with automatic failover from a micro-service requires the LATEST version of jtopen, to be placed in the `drivers` folder.
 ![OCP IBM i Db2 Mirror for i](./OCP-IBMi-db2M.png) 
 - `$ export DB2FORI_HOSTNAME=bendemo.10.7.19.71.nip.io`
