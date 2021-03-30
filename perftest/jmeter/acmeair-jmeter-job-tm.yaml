@@ -3,20 +3,20 @@ kind: Template
 metadata:
   labels:
     app: acmeair-jmeter
-  name: acmeair-jmeter-job
+  name: acmeair-jenkins-jmeter-job
 objects:
   - apiVersion: batch/v1
     kind: Job
     metadata:
       labels:
         app: acmeair-jmeter
-      name: acmeair-jmeter
+      name: acmeair-jenkins-jmeter
     spec:
       parallelism: 1
       completions: 1
       template:
         metadata:
-          name: acmeair-jmeter
+          name: acmeair-jenkins-jmeter
           labels:
             testplan: AcmeAir-microservices-mpJwt-v2
         spec:
