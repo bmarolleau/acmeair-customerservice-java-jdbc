@@ -3,7 +3,7 @@ kind: Template
 metadata:
   labels:
     app: acmeair-jmeter
-  name: acmeair-jenkins-jmeter-job
+  name: acmeair-jmeter-job
 objects:
   - apiVersion: batch/v1
     kind: Job
@@ -84,7 +84,7 @@ parameters:
     value: bmarolleau 
   - description: Name of the ConfigMap containing the test(s) to run
     name: JMX_CONFIGMAP
-    value: acmeair-jenkins-jmx
+    value: acmeair-jmx
   - description: Url for notification of test completion
     name: CALLBACK_URL
   - description: Name of the subdirectory where test results are to be stored 
