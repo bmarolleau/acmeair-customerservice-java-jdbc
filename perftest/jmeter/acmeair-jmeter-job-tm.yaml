@@ -22,7 +22,7 @@ objects:
         spec:
           containers:
           - name: jmeter
-            image:     image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/acmeair-jmeter:latest
+            image:     image-registry.openshift-image-registry.svc:5000/bmarolleau/acmeair-jmeter:latest
             resources:
               requests:
                 cpu: '500m'
