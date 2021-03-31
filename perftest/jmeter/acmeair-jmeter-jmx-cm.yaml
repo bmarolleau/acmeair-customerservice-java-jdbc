@@ -1,8 +1,8 @@
 apiVersion: v1
 data:
-  AcmeAir-microservices-mpJwt-v2.jmx: |
+  AcmeAir-microservices-mpJwt-mp3.3.jmx: |+
     <?xml version="1.0" encoding="UTF-8"?>
-    <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.4.1">
+    <jmeterTestPlan version="1.2" properties="2.8" jmeter="2.13.20151104">
       <hashTree>
         <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="acmeair" enabled="true">
           <stringProp name="TestPlan.comments">
@@ -37,13 +37,12 @@ data:
               <intProp name="LoopController.loops">-1</intProp>
             </elementProp>
             <stringProp name="ThreadGroup.num_threads">${__P(THREAD,50)}</stringProp>
-            <stringProp name="ThreadGroup.ramp_time">${__P(RAMP,30)}</stringProp>
+            <stringProp name="ThreadGroup.ramp_time">${__P(RAMP,0)}</stringProp>
             <boolProp name="ThreadGroup.scheduler">true</boolProp>
             <stringProp name="ThreadGroup.duration">${__P(DURATION,600)}</stringProp>
             <stringProp name="ThreadGroup.delay">1</stringProp>
             <longProp name="ThreadGroup.start_time">1370979917000</longProp>
             <longProp name="ThreadGroup.end_time">1370979917000</longProp>
-            <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
           </ThreadGroup>
           <hashTree>
             <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
@@ -55,7 +54,6 @@ data:
               <stringProp name="shareMode">shareMode.thread</stringProp>
               <boolProp name="stopThread">false</boolProp>
               <stringProp name="variableNames">WLP_HOSTS</stringProp>
-              <boolProp name="ignoreFirstLine">false</boolProp>
             </CSVDataSet>
             <hashTree/>
             <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
@@ -64,12 +62,12 @@ data:
               </elementProp>
               <stringProp name="HTTPSampler.domain">${__P(HOST,${WLP_HOSTS})}</stringProp>
               <stringProp name="HTTPSampler.port">${__P(PORT,9080)}</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
               <stringProp name="HTTPSampler.path"></stringProp>
               <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
             </ConfigTestElement>
             <hashTree/>
             <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
@@ -86,7 +84,6 @@ data:
             <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
               <collectionProp name="CookieManager.cookies"/>
               <boolProp name="CookieManager.clearEachIteration">false</boolProp>
-              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
             </CookieManager>
             <hashTree/>
             <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="Random User id" enabled="true">
@@ -119,6 +116,8 @@ data:
               </elementProp>
               <stringProp name="HTTPSampler.domain"></stringProp>
               <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
               <stringProp name="HTTPSampler.protocol"></stringProp>
               <stringProp name="HTTPSampler.contentEncoding"></stringProp>
               <stringProp name="HTTPSampler.path">/auth/login</stringProp>
@@ -127,9 +126,8 @@ data:
               <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
               <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
               <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.monitor">false</boolProp>
               <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
             </HTTPSamplerProxy>
             <hashTree/>
             <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -164,6 +162,8 @@ data:
                   </elementProp>
                   <stringProp name="HTTPSampler.domain"></stringProp>
                   <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                   <stringProp name="HTTPSampler.protocol"></stringProp>
                   <stringProp name="HTTPSampler.contentEncoding"></stringProp>
                   <stringProp name="HTTPSampler.path">/customer/byid/uid${USER_ID}@email.com</stringProp>
@@ -172,9 +172,8 @@ data:
                   <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
                   <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
                   <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <boolProp name="HTTPSampler.monitor">false</boolProp>
                   <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                 </HTTPSamplerProxy>
                 <hashTree/>
                 <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update Customer" enabled="true">
@@ -190,6 +189,8 @@ data:
                   </elementProp>
                   <stringProp name="HTTPSampler.domain"></stringProp>
                   <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                   <stringProp name="HTTPSampler.protocol"></stringProp>
                   <stringProp name="HTTPSampler.contentEncoding"></stringProp>
                   <stringProp name="HTTPSampler.path">/customer/byid/uid${USER_ID}@email.com</stringProp>
@@ -198,9 +199,8 @@ data:
                   <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
                   <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
                   <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <boolProp name="HTTPSampler.monitor">false</boolProp>
                   <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                 </HTTPSamplerProxy>
                 <hashTree>
                   <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -277,6 +277,8 @@ data:
                   </elementProp>
                   <stringProp name="HTTPSampler.domain"></stringProp>
                   <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                   <stringProp name="HTTPSampler.protocol"></stringProp>
                   <stringProp name="HTTPSampler.contentEncoding"></stringProp>
                   <stringProp name="HTTPSampler.path">/flight/queryflights</stringProp>
@@ -285,9 +287,8 @@ data:
                   <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
                   <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
                   <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <boolProp name="HTTPSampler.monitor">false</boolProp>
                   <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                 </HTTPSamplerProxy>
                 <hashTree>
                   <com.acmeair.jmeter.functions.FlightsPostProcessor guiclass="com.acmeair.jmeter.functions.FlightsPostProcessorGui" testclass="com.acmeair.jmeter.functions.FlightsPostProcessor" testname="Flights PostProcessor" enabled="true"/>
@@ -296,17 +297,16 @@ data:
                 <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
                   <stringProp name="delimiter">,</stringProp>
                   <stringProp name="fileEncoding"></stringProp>
-                  <stringProp name="filename">/Users/Benoit2/acmeair-driver/acmeair-jmeter/scripts/Airports.csv</stringProp>
+                  <stringProp name="filename">Airports.csv</stringProp>
                   <boolProp name="quotedData">false</boolProp>
                   <boolProp name="recycle">true</boolProp>
                   <stringProp name="shareMode">shareMode.all</stringProp>
                   <boolProp name="stopThread">false</boolProp>
                   <stringProp name="variableNames">TO_AIRPORT_CODE</stringProp>
-                  <boolProp name="ignoreFirstLine">false</boolProp>
                 </CSVDataSet>
                 <hashTree/>
                 <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
-                  <stringProp name="filename">/Users/Benoit2/acmeair-driver/acmeair-jmeter/scripts/Airports2.csv</stringProp>
+                  <stringProp name="filename">Airports2.csv</stringProp>
                   <stringProp name="fileEncoding"></stringProp>
                   <stringProp name="variableNames">FROM_AIRPORT_CODE</stringProp>
                   <stringProp name="delimiter">,</stringProp>
@@ -314,7 +314,6 @@ data:
                   <boolProp name="recycle">true</boolProp>
                   <boolProp name="stopThread">false</boolProp>
                   <stringProp name="shareMode">shareMode.all</stringProp>
-                  <boolProp name="ignoreFirstLine">false</boolProp>
                 </CSVDataSet>
                 <hashTree/>
               </hashTree>
@@ -382,6 +381,8 @@ data:
                   </elementProp>
                   <stringProp name="HTTPSampler.domain"></stringProp>
                   <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                   <stringProp name="HTTPSampler.protocol"></stringProp>
                   <stringProp name="HTTPSampler.contentEncoding"></stringProp>
                   <stringProp name="HTTPSampler.path">/booking/bookflights</stringProp>
@@ -390,9 +391,8 @@ data:
                   <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
                   <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
                   <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <boolProp name="HTTPSampler.monitor">false</boolProp>
                   <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                 </HTTPSamplerProxy>
                 <hashTree/>
               </hashTree>
@@ -413,6 +413,8 @@ data:
                   </elementProp>
                   <stringProp name="HTTPSampler.domain"></stringProp>
                   <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                   <stringProp name="HTTPSampler.protocol"></stringProp>
                   <stringProp name="HTTPSampler.contentEncoding"></stringProp>
                   <stringProp name="HTTPSampler.path">/booking/byuser/uid${USER_ID}@email.com</stringProp>
@@ -421,9 +423,8 @@ data:
                   <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
                   <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
                   <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <boolProp name="HTTPSampler.monitor">false</boolProp>
                   <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
                 </HTTPSamplerProxy>
                 <hashTree/>
               </hashTree>
@@ -484,6 +485,8 @@ data:
                     </elementProp>
                     <stringProp name="HTTPSampler.domain"></stringProp>
                     <stringProp name="HTTPSampler.port"></stringProp>
+                    <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                    <stringProp name="HTTPSampler.response_timeout"></stringProp>
                     <stringProp name="HTTPSampler.protocol"></stringProp>
                     <stringProp name="HTTPSampler.contentEncoding"></stringProp>
                     <stringProp name="HTTPSampler.path">/booking/cancelbooking</stringProp>
@@ -492,9 +495,8 @@ data:
                     <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
                     <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
                     <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                    <boolProp name="HTTPSampler.monitor">false</boolProp>
                     <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-                    <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-                    <stringProp name="HTTPSampler.response_timeout"></stringProp>
                   </HTTPSamplerProxy>
                   <hashTree/>
                 </hashTree>
@@ -546,7 +548,7 @@ data:
               <stringProp name="filename"></stringProp>
             </ResultCollector>
             <hashTree/>
-            <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+            <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="false">
               <boolProp name="ResultCollector.error_logging">false</boolProp>
               <objProp>
                 <name>saveConfig</name>
@@ -612,7 +614,7 @@ data:
               <stringProp name="filename"></stringProp>
             </ResultCollector>
             <hashTree/>
-            <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="true">
+            <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="false">
               <boolProp name="ResultCollector.error_logging">false</boolProp>
               <objProp>
                 <name>saveConfig</name>
@@ -649,6 +651,7 @@ data:
         </hashTree>
       </hashTree>
     </jmeterTestPlan>
+
   Airports.csv: |
     DEL
     FRA
@@ -681,10 +684,10 @@ data:
     SYD
     IKA
   hosts.csv: |
-    acmeair-acmeair.apps.ocp43.demopower.mpl
+    acmeair-bmarolleau.apps.sandbox.power.mpl
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2021-03-30T08:14:24Z"
+  creationTimestamp: "2021-03-31T09:28:22Z"
   labels:
     job-name: acmeair-jmeter
   managedFields:
@@ -693,13 +696,13 @@ metadata:
     fieldsV1:
       f:data:
         .: {}
-        f:AcmeAir-microservices-mpJwt-v2.jmx: {}
+        f:AcmeAir-microservices-mpJwt-mp3.3.jmx: {}
         f:Airports.csv: {}
         f:Airports2.csv: {}
         f:hosts.csv: {}
     manager: kubectl-create
     operation: Update
-    time: "2021-03-30T08:14:24Z"
+    time: "2021-03-31T09:28:22Z"
   - apiVersion: v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -709,9 +712,9 @@ metadata:
           f:job-name: {}
     manager: kubectl-label
     operation: Update
-    time: "2021-03-30T08:16:29Z"
+    time: "2021-03-31T09:34:27Z"
   name: acmeair-jmx
   namespace: bmarolleau
-  resourceVersion: "54300161"
+  resourceVersion: "54767110"
   selfLink: /api/v1/namespaces/bmarolleau/configmaps/acmeair-jmx
-  uid: 00cf9dc2-0394-4d73-a3a1-dddcb660b3a5
+  uid: f855dcf9-3a9d-40d5-a276-b39b39275ac1
