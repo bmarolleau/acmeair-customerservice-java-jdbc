@@ -1,7 +1,8 @@
-
-## Acme Air Customer Service - Java/Liberty + JDBC (Db2 for i) version
+### Demonstration : Modern Applications with IBM i & OpenShift 
 
 Link to the full presentation "[OpenShift & IBM i introduction](https://ibm.box.com/s/dnv8rhh2ikim70t69kcjf9qblehblc0u)" demonstrating how to combine the state of the art db server IBM i/Db2 for i with a cloud native microservice architecture on Redhat OpenShift.
+
+## Acme Air Customer Service - Java/Liberty + JDBC (Db2 for i) version
 
 Implementation of the Acme Air Customer Service for Java/Liberty. The primary task of the customer service is to store, update, and retrieve customer data on Db2 for i. It can be adapted for any jdbc based database server.  Fork from the Mongodb based [Customer Service](https://github.com/blueperf/acmeair-customerservice-java).  
 
