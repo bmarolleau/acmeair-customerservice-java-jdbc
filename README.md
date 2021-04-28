@@ -11,14 +11,14 @@ With Db2 for i:  potentially ZERO interruption, ZERO downtime, and 24x7 access t
 
 ![OCP IBM i](./OCP-IBMi.png)
 
-## Build Instruction for OpenShift 
+## Build Instruction for OpenShift / MiniShift or CodeReady Containers
 
 - First,  git clone this repository, in addition to the other microservices from the [BluePerf project](https://github.com/blueperf/acmeair-mainservice-java). 
 use the test branch : branch microprofile-3.3 , use the git option `--branch microprofile-3.3` (do that for each microservice in the BluePerf project)
 - Download and Copy an up to date jdbc driver in the 'drivers' folder. ex: jt400.jar
 - Use the scripts in the 'drivers' folder to create the acmeair database and import the initial data.
 - Install maven, oc cli , docker or podman client first. Refer to the original BluePerf project instructions. 
-- Follow the instruction on BluePerf to build the other microservices.
+- Follow the instruction on BluePerf (link above) to build & deploy the other microservices.
 - Build and deploy this micro-service (replacing the initial [Customer Service](https://github.com/blueperf/acmeair-customerservice-java) by this Db2 for i alternative from in a single command using the following commands. 
 Note: Feel free to change that, but the default user profile used here is 'acmeair' , password is 'password', library (sql collection) is acmeair. Update the Deployment environment variable values according to your environement (user, password, lib list)
 ### Example 1 - Single Db2 for i server:
