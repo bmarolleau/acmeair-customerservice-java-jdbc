@@ -33,3 +33,6 @@ Refer to this [jdbc/jtopen documentation](http://jt400.sourceforge.net/doc/com/i
 - `$ export DB2FORI_HOSTNAME_ALT=db2acmeair2.10.3.60.81.nip.io`
 - `$ cd scripts`
 - `$ ./buildAndDeployToOpenshift-CustomerService.sh  default-route-openshift-image-registry.apps.sandbox.power.mpl/bmarolleau  default-route-openshift-image-registry.apps.sandbox.power.mpl/bmarolleau acmeair-bmarolleau.apps.sandbox.power.mpl podman `
+
+## Architecture Overview : Core Business Applications Modernization 
+![OCP IBM i ArchOverview](./OCP-IBMi-Architecture-Overview.png)
