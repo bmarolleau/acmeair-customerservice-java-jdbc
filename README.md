@@ -1,6 +1,11 @@
 ## Demonstration : Micro-service Applications with IBM i & OpenShift 
 
-Link to the full presentation "[OpenShift & IBM i introduction](https://ibm.box.com/s/dnv8rhh2ikim70t69kcjf9qblehblc0u)" demonstrating how to combine the state of the art db server IBM i/Db2 for i with a cloud native microservice architecture on Redhat OpenShift. Based on real customer requests, it is a good conversation starter illustrating the use of the latest technologies on a live environment (#ShowNotTell) and a fictive company ‘AcmeAir’: app development and test of a microservice application running on OpenShift 4.x on Power integrated with a 'customer' (CRM) microservice running on IBM i / Db2 Mirror for i.   Stateless and Stateful: Best of both worlds. 
+Link to the full presentation "[OpenShift & IBM i introduction](https://ibm.box.com/s/dnv8rhh2ikim70t69kcjf9qblehblc0u)" demonstrating how to combine the state of the art db server IBM i/Db2 for i with a cloud native microservice architecture on Redhat OpenShift. 
+
+Based on real customer requests, it is a good conversation starter illustrating the use of the latest technologies on a live environment (#ShowNotTell) and a fictive company ‘AcmeAir’: app development and test of a microservice application running on OpenShift integrated with a 'customer' (CRM) microservice running on IBM i / Db2 Mirror for i.   
+
+Stateless and Stateful: Best of both worlds. 
+
 Find videos & demos on this topic or others on my humble [Youtube Channel](https://www.youtube.com/channel/UCUYRV_RT9zUKfbcmZsmQO2Q) and on the [IBM Customer Experience Portal](https://ibm.biz/client-experience-portal]) (IBMID required)
 
 ### Acme Air Customer Service - Java/Liberty + JDBC (Db2 for i) version
