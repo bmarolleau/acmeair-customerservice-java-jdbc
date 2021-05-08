@@ -1,4 +1,4 @@
-# Demonstration : Micro-service Applications with IBM i & OpenShift 
+# Demonstration : Micro-service Apps with IBM i & OpenShift 
 
 Link to the full presentation "[OpenShift & IBM i introduction](https://ibm.box.com/s/dnv8rhh2ikim70t69kcjf9qblehblc0u)" demonstrating how to combine the state of the art db server **IBM i/Db2 for i** with a **cloud native** microservice architecture on **Redhat OpenShift**. 
 
