@@ -40,3 +40,8 @@ Refer to this [jdbc/jtopen documentation](http://jt400.sourceforge.net/doc/com/i
 
 ## Architecture Overview : 
 ![OCP IBM i ArchOverview](./OCP-IBMi-Architecture-Overview.png)
+
+
+## Jenkins and Apapche JMeter : 
+
+Instructions for Jenkins automation and JMeter scripts in the [perftest](./perftest) folder.
