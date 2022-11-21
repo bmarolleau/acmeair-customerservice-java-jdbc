@@ -47,6 +47,8 @@ spec:
           value: ibmi-database 
         - name: DATABASE_ALT_HOST
           value: ibmi-database-alt
+        - name: DATABASE_NAME
+          value: '*SYSBAS'
         - name: LIBRARY_LIST
           value: acmeair 
         - name: SECURE_SERVICE_CALLS
@@ -82,7 +84,7 @@ metadata:
   name: ibmi-database-alt
 spec:
   type: ExternalName
-  externalName: bendemo2.10.7.19.72.nip.io
+  externalName: 
 ---
 ##### Customer Database #####
 # apiVersion: v1

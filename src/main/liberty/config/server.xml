@@ -30,7 +30,7 @@
   <dataSource id="acmeairdb" jndiName="jdbc/acmeairdb" statementCacheSize="60" connectionManagerRef="conMgr4">
     <jdbcDriver libraryRef="DB2iToolboxLib"/>
     <properties.db2.i.toolbox 
-    databaseName="acmeair" 
+    databaseName="${env.DATABASE_NAME}" 
     password="${env.PASSWORD}" 
     serverName="${env.DATABASE_HOST}" 
     user="${env.USERNAME}" 
